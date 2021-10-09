@@ -1,11 +1,21 @@
 post  http://localhost:3000/api/post
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MTYxODUyZDc1OWY0OTdlNzgyMzQxYzIiLCJpYXQiOjE2MzM3ODg5NzF9.-Xjsr6ngbounzS-rRHAEqG9CFyqSVcRfcCy8v_PSa84
 
 {
-    "title": "lenrn",
+    "title": "Learn",
     "description": "...",
-    "url": "google.com",
+    "url": "youtube.com",
     "status": "TO LEARN"
 }
 
 
+#### 
+
+post  http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+{
+    "username": "admin",
+    "password": "admin"
+}

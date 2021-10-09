@@ -91,8 +91,8 @@ router.post('/login', async (req, res) => {
         }
 
         // Return token
-        const accessToken = jwt.sign({
-            userId: user._id},
+        const accessToken = jwt.sign(
+            {userId: user._id},
             process.env.ACCESS_TOKEN);
 
         res.json({
