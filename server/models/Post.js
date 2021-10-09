@@ -10,14 +10,14 @@ const Post = new Schema ({
         type: String,
     },
     url: {
-        type: string,
+        type: String,
     },
     status: {
         type: String,
         enum: ['TO LEARN', 'LEARNING', 'LEARNED'],
     },
     user: {
-        type: Schema.types.ObjectId,
+        type: Schema.Types.ObjectId,
         refs: 'users'
     }
 });
