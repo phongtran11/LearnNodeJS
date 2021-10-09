@@ -1,1 +1,7 @@
-get http://localhost:3000/
+post  http://localhost:3000/api/auth/register
+Content-Type: application/json
+
+{
+    "username": "hi",
+    "password": "admin"
+}

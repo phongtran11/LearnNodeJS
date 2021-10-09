@@ -1,9 +1,14 @@
 const express = require('express');
 const app = express();
 const db = require('./config/db/index');
+const router = require('./router/index');
 
+// Connect To DB
 db.connectDB();
+app.use(express.json())
 
-app.get('/', (req,res) => res.send('hello'));
+// init Router 
+router(app);
 
-app.listen(3000,()=> console.log('Server Running at http://localhost:3000'));
+// Server Listen
+app.listen(3000, () => {console.log('Server Running at http://localhost:3000')});
