@@ -1,21 +1,38 @@
-post  http://localhost:3000/api/post
+post http://localhost:3000/api/post
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MTYxODUyZDc1OWY0OTdlNzgyMzQxYzIiLCJpYXQiOjE2MzM3ODg5NzF9.-Xjsr6ngbounzS-rRHAEqG9CFyqSVcRfcCy8v_PSa84
 
+
 {
-    "title": "Learn",
+    "title": "adsfad",
     "description": "...",
-    "url": "youtube.com",
+    "url": "google.com",
     "status": "TO LEARN"
 }
 
+###
+get http://localhost:3000/api/post
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MTYxODUyZDc1OWY0OTdlNzgyMzQxYzIiLCJpYXQiOjE2MzM3ODg5NzF9.-Xjsr6ngbounzS-rRHAEqG9CFyqSVcRfcCy8v_PSa84
 
-#### 
 
-post  http://localhost:3000/api/auth/login
-Content-Type: application/json
+###
+post http://localhost:3000/api/auth/login
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MTYxODUyZDc1OWY0OTdlNzgyMzQxYzIiLCJpYXQiOjE2MzM3ODg5NzF9.-Xjsr6ngbounzS-rRHAEqG9CFyqSVcRfcCy8v_PSa84
+
 
 {
     "username": "admin",
     "password": "admin"
+}
+
+###
+put http://localhost:3000/api/post/6161adcb898e674699a6442a
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MTYxODUyZDc1OWY0OTdlNzgyMzQxYzIiLCJpYXQiOjE2MzM3ODg5NzF9.-Xjsr6ngbounzS-rRHAEqG9CFyqSVcRfcCy8v_PSa84
+
+{
+        "title": "vue",
+    "description": "...",
+    "url": "google.com",
+    "status": "TO LEARN"
 }
