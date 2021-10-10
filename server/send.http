@@ -36,3 +36,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MTYxO
     "url": "google.com",
     "status": "TO LEARN"
 }
+
+###
+delete http://localhost:3000/api/post/6161adcb898e674699a6442a
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MTYxODUyZDc1OWY0OTdlNzgyMzQxYzIiLCJpYXQiOjE2MzM3ODg5NzF9.-Xjsr6ngbounzS-rRHAEqG9CFyqSVcRfcCy8v_PSa84

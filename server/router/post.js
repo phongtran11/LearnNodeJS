@@ -107,4 +107,26 @@ router.put("/:id", verifyToken, async (req, res) => {
   }
 });
 
+// DELETE api/post/:id
+router.delete("/:id", verifyToken, async (req, res) => {
+  try {
+    const conditionDelete = { _id: req.params.id, user: req.userId };
+    const deletedPost = await Post.findOneAndDelete(conditionDelete);
+
+    if (!deletedPost) {
+      res.status(401).json({
+        success: false,
+        message: "Post not found or user not Authorised",
+      });
+    }
+
+    res.json({ success: true, message: "Delete Complete", deletedPost });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      sussces: false,
+      message: "Interal server error",
+    });
+  }
+});
 module.exports = router;
