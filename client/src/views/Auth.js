@@ -12,7 +12,7 @@ const Auth = ({ authRoute }) => {
     return (
         <div className='landing'>
             <div className='dark-overlay'>
-                <div class='landing-inner'>
+                <div className='landing-inner'>
                     <h1>Learning App</h1>
                     <h4>Tracking your learning</h4>
                     {body}
