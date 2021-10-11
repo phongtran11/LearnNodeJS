@@ -1,10 +1,11 @@
 import React from "react";
 import { Button, Form } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useState, useContext } from "react";
 import { AuthContext } from "../../contexts/authContext";
 
 function LoginForm() {
+    // Context
     const { loginUser } = useContext(AuthContext);
 
     const [loginForm, setLoginForm] = useState({
@@ -12,21 +13,32 @@ function LoginForm() {
         password: "",
     });
 
+    // Local state
     const { username, password } = loginForm;
 
+    // Route
+    const history = useHistory();
+
+    // handle Change Form
     const onChangeLoginForm = (e) =>
         setLoginForm({ ...loginForm, [e.target.name]: e.target.value });
 
+    // handle Login
     const login = async (event) => {
         event.preventDefault();
-
-        const loginData = await loginUser(loginForm);
-        console.log(loginData);
+        try {
+            const loginData = await loginUser(loginForm);
+            if (loginData.success) {
+                history.push("/dashboard");
+            }
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     return (
         <>
-            <Form className='my-4'>
+            <Form className='my-4' onSubmit={login}>
                 <Form.Group className='mb-3'>
                     <Form.Control
                         type='text'

@@ -1,32 +1,54 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const argon2 = require('argon2');
-const jwt = require('jsonwebtoken');
-const User = require('../models/User');
-require('dotenv').config();
+const argon2 = require("argon2");
+const jwt = require("jsonwebtoken");
+const User = require("../models/User");
+const verifyToken = require("../middleware/auth");
+require("dotenv").config();
+
+// GET api/auth
+// Check if user is login
+router.get("/", verifyToken, async (req, res) => {
+    try {
+        const user = await User.findById(req.userId).select("-password");
+        if (!user) {
+            return res
+                .status(400)
+                .json({ success: false, message: "User not found" });
+        }
+
+        return res.json({ success: true, user });
+    } catch (error) {
+        console.log(error);
+        res.status(400).json({
+            success: false,
+            message: "Internal server error",
+        });
+    }
+});
 
 // POST  /api/auth/register
-router.post('/register', async (req, res) => {
-    const {username, password} = req.body;
+router.post("/register", async (req, res) => {
+    const { username, password } = req.body;
 
     // Validation
-    if(!username || !password) {
+    if (!username || !password) {
         return res.status(400, {
             success: false,
-            message: 'Missing username or password',
+            message: "Missing username or password",
         });
-    };
+    }
 
     try {
         // Check user existing
-        const user = await User.findOne({username});
+        const user = await User.findOne({ username });
 
         if (user) {
             return res.status(400, {
                 success: false,
-                message: 'User already exists',
+                message: "User already exists",
             });
-        };
+        }
 
         // Hash Password
         const hashpassword = await argon2.hash(password);
@@ -37,46 +59,47 @@ router.post('/register', async (req, res) => {
         await newuser.save();
 
         // Return token
-        const accessToken = jwt.sign({
-            userId: newuser._id},
-            process.env.ACCESS_TOKEN);
+        const accessToken = jwt.sign(
+            {
+                userId: newuser._id,
+            },
+            process.env.ACCESS_TOKEN
+        );
 
         res.json({
-            Success: true,
-            message:'User created successfully',
-            accessToken
+            success: true,
+            message: "User created successfully",
+            accessToken,
         });
-    } 
-    catch(err) {
+    } catch (err) {
         console.log(err);
         res.status(500).json({
             sussces: false,
-            message: 'Interal server error'
+            message: "Interal server error",
         });
     }
-}); 
-
+});
 
 // POST /api/auth/login
-router.post('/login', async (req, res) => {
-    const {username, password} = req.body;
+router.post("/login", async (req, res) => {
+    const { username, password } = req.body;
 
     // Validation
-    if(!username || !password) {
+    if (!username || !password) {
         return res.status(400, {
             success: false,
-            message: 'Missing username or password',
+            message: "Missing username or password",
         });
-    };
+    }
 
     try {
-        const user = await User.findOne({username});
-        
+        const user = await User.findOne({ username });
+
         //  Verify username
-        if(!user) {
+        if (!user) {
             return res.status(400).json({
                 success: false,
-                message: 'Incorrect username or password!!!'
+                message: "Incorrect username or password!!!",
             });
         }
 
@@ -86,28 +109,28 @@ router.post('/login', async (req, res) => {
         if (!passwordValid) {
             return res.status(400).json({
                 success: false,
-                message: 'Incorrect username or password!!!'
+                message: "Incorrect username or password!!!",
             });
         }
 
         // Return token
         const accessToken = jwt.sign(
-            {userId: user._id},
-            process.env.ACCESS_TOKEN);
+            { userId: user._id },
+            process.env.ACCESS_TOKEN
+        );
 
         res.json({
-            Success: true,
-            message:'Login successfully',
-            accessToken
+            success: true,
+            message: "Login successfully",
+            accessToken,
         });
-    }
-    catch (err) {
+    } catch (err) {
         console.log(err);
         res.status(500).json({
             sussces: false,
-            message: 'Interal server error'
+            message: "Interal server error",
         });
     }
-})
+});
 
 module.exports = router;

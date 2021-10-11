@@ -1,8 +1,10 @@
 import "./App.css";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { AuthProvider } from "./contexts/authContext";
 import Lading from "./components/Layouts/Lading";
 import Auth from "./views/Auth";
-import { AuthProvider } from "./contexts/authContext";
+import DashBoard from "./views/DashBoard";
+import ProtectedRoute from "./components/routing/ProtectedRoute";
 
 function App() {
     return (
@@ -21,6 +23,11 @@ function App() {
                         render={(prop) => (
                             <Auth {...prop} authRoute='register' />
                         )}
+                    />
+                    <ProtectedRoute
+                        exact
+                        path='/dashboard'
+                        component={DashBoard}
                     />
                 </Switch>
             </Router>

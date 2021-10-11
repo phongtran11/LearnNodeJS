@@ -1,20 +1,52 @@
-import { createContext, useReducer } from "react";
+import { createContext, useReducer, useEffect } from "react";
 import axios from "axios";
 import { authReducer } from "../reducer/authReducer";
 import { apiUrl, localStorageToken } from "./constants";
+import setAuthToken from "../utils/setAuthTokenAcess";
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
+    // State
     const [authState, dispatch] = useReducer(authReducer, {
         authLoading: true,
         isAuthenticated: false,
         user: null,
     });
 
+    //
+    const loadUser = async () => {
+        if (localStorage[localStorageToken]) {
+            setAuthToken(localStorage[localStorageToken]);
+        }
+
+        try {
+            const response = await axios.get(`${apiUrl}/auth`);
+            if (response.data.success) {
+                dispatch({
+                    type: "SET_AUTH",
+                    payload: {
+                        isAuthenticated: true,
+                        user: response.data.user,
+                    },
+                });
+            }
+        } catch (error) {
+            localStorage.removeItem(localStorageToken);
+            setAuthToken(null);
+            dispatch({
+                type: "SET_AUTH",
+                payload: { isAuthenticated: false, user: null },
+            });
+        }
+    };
+
+    useEffect(() => loadUser(), []);
+
+    // Connect to Api
     const loginUser = async (userForm) => {
         try {
-            const response = await axios.post(`${apiUrl}/auth/login`);
+            const response = await axios.post(`${apiUrl}/auth/login`, userForm);
             if (response.data.success) {
                 localStorage.setItem(
                     localStorageToken,
@@ -28,7 +60,8 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
-    const authContextData = { loginUser };
+    // Return Provider
+    const authContextData = { loginUser, authState };
     return (
         <AuthContext.Provider value={authContextData}>
             {children}
