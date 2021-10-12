@@ -50,7 +50,6 @@ export const AuthProvider = ({ children }) => {
                 `${apiUrl}/auth/register`,
                 registerForm
             );
-            console.log('test');
             if (response.data.success) {
                 localStorage.setItem(
                     localStorageToken,
