@@ -65,6 +65,15 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
+    //  LogOut
+    const logoutUser = () => {
+        localStorage.removeItem(localStorageToken);
+        dispatch({
+            type: 'SET_AUTH',
+            payload: { isAuthenticated: false, user: null },
+        });
+    };
+
     // Login
     const loginUser = async (userForm) => {
         try {
@@ -86,7 +95,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     // Return Provider
-    const authContextData = { loginUser, authState, registerUser };
+    const authContextData = { authState, loginUser, registerUser, logoutUser };
     return (
         <AuthContext.Provider value={authContextData}>
             {children}
