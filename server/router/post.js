@@ -80,7 +80,7 @@ router.put('/:id', verifyToken, async (req, res) => {
         let updatedPost = {
             title,
             description: description || '',
-            url: (url.startsWith('http://') ? url : `http://${url}`) || '',
+            url: (url.startsWith('https://') ? url : `https://${url}`) || '',
             status: status || 'TO LEARN',
         };
 

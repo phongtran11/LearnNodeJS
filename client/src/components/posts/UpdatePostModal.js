@@ -42,7 +42,7 @@ const UpdatePostModal = () => {
         });
     };
     return (
-        <Modal show={showUpdatePost} animation={false} onHide={closeDialog}>
+        <Modal show={showUpdatePost} onHide={closeDialog}>
             <Modal.Header>
                 <Modal.Title>What do you want to learn?</Modal.Title>
             </Modal.Header>

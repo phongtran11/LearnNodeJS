@@ -98,7 +98,6 @@ const Dashboard = () => {
                 })}
                 delay={3000}
                 autohide
-                animation={false}
             >
                 <Toast.Body>
                     <strong>{message}</strong>
