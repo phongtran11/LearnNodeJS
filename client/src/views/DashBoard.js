@@ -10,18 +10,19 @@ import Button from 'react-bootstrap/Button';
 import AddPostModal from '../components/posts/PostButton';
 import addIcon from '../assets/plus-circle-fill.svg';
 import Toast from 'react-bootstrap/Toast';
+import UpdatePostModal from '../components/posts/UpdatePostModal';
 
 const Dashboard = () => {
-    // Context
+    // Auth Context
     const {
         authState: {
             user: { username },
         },
     } = useContext(AuthContext);
 
-    // Post
+    // Post Context
     const {
-        postState: { posts, postsLoading },
+        postState: { posts, postsLoading, post },
         getPosts,
         setAddModal,
         showToast: { show, message, type },
@@ -50,7 +51,12 @@ const Dashboard = () => {
                         <Card.Text>
                             Click button below to Tracking your Skill
                         </Card.Text>
-                        <Button variant="primary">LearnIt!</Button>
+                        <Button
+                            variant="primary"
+                            onClick={setAddModal.bind(this, true)}
+                        >
+                            LearnIt!
+                        </Button>
                     </Card.Body>
                 </Card>
             </>
@@ -80,7 +86,7 @@ const Dashboard = () => {
         <div>
             {body}
             <AddPostModal />
-
+            {post !== null && <UpdatePostModal />}
             <Toast
                 show={show}
                 style={{ position: 'fixed', top: '20%', right: '0%' }}

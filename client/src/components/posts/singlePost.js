@@ -4,7 +4,6 @@ import Col from 'react-bootstrap/Col';
 import { ActionButton } from './ActionButton';
 
 const SinglePost = ({ post: { _id, status, title, description, url } }) => {
-    console.log(status);
     return (
         <Card
             className="shadow"

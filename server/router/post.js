@@ -101,7 +101,11 @@ router.put('/:id', verifyToken, async (req, res) => {
             });
         }
 
-        res.json({ success: true, message: 'Update Complete', updatedPost });
+        res.json({
+            success: true,
+            message: 'Excellent progress!',
+            post: updatedPost,
+        });
     } catch (error) {
         console.log(error);
         res.status(500).json({

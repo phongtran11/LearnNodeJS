@@ -8,11 +8,13 @@ export const PostContext = createContext();
 const PostContextProvider = ({ children }) => {
     // State
     const [postState, dispatch] = useReducer(postReducer, {
+        post: null,
         posts: [],
         postsLoading: true,
     });
 
     const [showAddModal, setAddModal] = useState(false);
+    const [showUpdatePost, setShowUpdatePost] = useState(false);
     const [showToast, setShowToast] = useState({
         show: false,
         message: '',
@@ -53,6 +55,45 @@ const PostContextProvider = ({ children }) => {
         }
     };
 
+    // delete post
+    const deletePost = async (postId) => {
+        try {
+            const response = await axios.delete(`${apiUrl}/post/${postId}`);
+            if (response.data.success) {
+                dispatch({ type: 'DELETE_POST', payload: postId });
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    // Find Post when user Click edit
+    const findPost = (postId) => {
+        const post = postState.posts.find((post) => post._id === postId);
+        dispatch({ type: 'FIND_POST', payload: post });
+    };
+
+    // update post
+    const updatePost = async (updatePost) => {
+        try {
+            const response = await axios.put(
+                `${apiUrl}/post/${updatePost._id}`,
+                updatePost
+            );
+            if (response.data.success) {
+                dispatch({
+                    type: 'UPDATE_POST',
+                    payload: response.data.post,
+                });
+                return response.data;
+            }
+        } catch (error) {
+            return error.response.data
+                ? error.response.data
+                : { success: false, message: 'Server error' };
+        }
+    };
+
     // Post Context Data
     const postContextData = {
         postState,
@@ -62,6 +103,11 @@ const PostContextProvider = ({ children }) => {
         setAddModal,
         showToast,
         setShowToast,
+        deletePost,
+        updatePost,
+        findPost,
+        showUpdatePost,
+        setShowUpdatePost,
     };
 
     return (
