@@ -1,6 +1,6 @@
 export const apiUrl =
     process.env.NODE_ENV !== 'production'
-        ? 'http://localhost:5000/api'
+        ? 'https://polar-hollows-34487.herokuapp.com//api'
         : 'https://infinite-mountain-97612.herokuapp.com/api';
 
 export const localStorageToken = 'learnIt';
