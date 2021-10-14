@@ -70,7 +70,7 @@ const RegisterForm = () => {
                 </Form.Group>
                 <Form.Group className="mb-3">
                     <Form.Control
-                        type="text"
+                        type="password"
                         placeholder="Password"
                         name="password"
                         required
@@ -80,7 +80,7 @@ const RegisterForm = () => {
                 </Form.Group>
                 <Form.Group className="mb-3">
                     <Form.Control
-                        type="text"
+                        type="passwordß"
                         placeholder="Comfirm Password"
                         name="confirmPassword"
                         required
